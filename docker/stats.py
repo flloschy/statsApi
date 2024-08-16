@@ -13,9 +13,9 @@ def formatToCSV(lines: list[str]) -> list[str]:
 
     for line in linesWithoutHeader:
         words = line.strip().replace(" / ", ";").split(' ')
-        cleaned = [char for char in words if chat != ""]
+        cleaned = [char for char in words if char != ""]
         csv = ";".join(cleaned)
-        values = values.split(";")
+        values = csv.split(";")
 
         outputLine = []
         for i, value in enumerate(values):
@@ -48,7 +48,7 @@ def formatCSV(lines: list[str]):
 
     output = ""
     for line in lines:
-        values = line.split(",")
+        values = line.split(";")
         activeContainer = values[1]
         for head, value in zip(CSVHeaders, values):
             if head not in selectedHeaders:
@@ -61,11 +61,11 @@ def formatCSV(lines: list[str]):
                 value = max(0, v - lastValue)
                 cache[cacheTarget] = v
             output += f"docker_stats_{head}"
-            output += '{container="' + containerName + '"} '
+            output += '{container="' + activeContainer + '"} '
             output += str(value) + "\n"
 
     writeCache("dockerNetwork", cache)
-
+    return output
 
 def getDockerStats():
     return makeResponse(formatCSV(formatToCSV(getDocker())))

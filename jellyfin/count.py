@@ -13,7 +13,6 @@ def getCounts() -> str:
 
 
 def formatCount(text: str):
-    print(text)
     countData: dict = json.loads(text)
 
     output = ""
