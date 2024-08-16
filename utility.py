@@ -1,7 +1,8 @@
 import json
 import os
 import flask
-CONFIG = json.load(open("./config.json", "r"))
+parentPath = os.path.dirname(os.path.abspath(__file__)) + "/"
+CONFIG = json.load(open(f"{parentPath}config.json", "r"))
 
 
 def percent(x: str) -> float:
@@ -39,12 +40,11 @@ def anyToKilloBytes(x: str) -> int:
 
 cache = {}
 
-
 def readCache(file: str) -> dict:
     if file in cache.keys():
         return cache[file]
 
-    location = CONFIG["cacheFolder"] + file + ".json"
+    location = f"{parentPath}cache/{file}.json"
     fileContent = json.load(
         open(location, "r")) if os.path.exists(location) else {}
     cache[file] = fileContent
@@ -53,7 +53,7 @@ def readCache(file: str) -> dict:
 
 def writeCache(file: str, content: dict) -> None:
     cache[file] = content
-    location = CONFIG["cacheFolder"] + file + ".json"
+    location = f"{parentPath}cache/{file}.json"
     json.dump(content, open(location, "w" if os.path.exists(location) else "x"))
 
 

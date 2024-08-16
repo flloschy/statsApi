@@ -1,6 +1,5 @@
 {
-    "jellyfinUrl": "http://localhost:3004/",
+    "jellyfinUrl": "https://jellyfin.floschy.dev/",
     "jellyfinApiKey": "",
-    "cacheFolder": "/home/floschy/grafana/statsApi/cache/",
     "port": 1234
 }

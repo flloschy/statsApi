@@ -9,6 +9,7 @@ from system.memory import getSystemMemoryUsage
 
 import flask
 import waitress
+import os
 
 
 endPoints = {
@@ -28,5 +29,5 @@ for endPoint, fn in endPoints.items():
 
 
 if __name__ == '__main__':
-    waitress.serve(api, host="127.0.0.1", port=CONFIG["port"])
-    # api.run(host="127.0.0.1", port=CONFIG["port"])
+    # waitress.serve(api, host="127.0.0.1", port=CONFIG["port"])
+    api.run(host="127.0.0.1", port=CONFIG["port"])
