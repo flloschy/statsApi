@@ -21,12 +21,17 @@ def formatSession(text: str) -> str:
     for state in sessionData:
         try:
             user = state["UserName"]
+            device = state["Client"].replace(" ", "_") + "_" + state["DeviceName"]
             title = state["NowPlayingItem"]["Name"]
-            activeUsers.append(user)
+            
+            uid = user + "_" + device
+
+            activeUsers.append(uid)
 
             type_ = state["NowPlayingItem"]["MediaType"]
             muted = state["PlayState"]["IsMuted"]
             paused = state["PlayState"]["IsPaused"]
+            
 
             code = "".join([
                 "Paused " if paused else "Playing ",
@@ -34,15 +39,15 @@ def formatSession(text: str) -> str:
                 type_
             ])
 
-            uid = title + code
-
+            #  uid = title + code
             # if user in cache.keys():
             #     if cache[user] == uid:
             #         continue
-            cache[user] = None
+
+            cache[uid] = None
 
             output += 'jellyfin_active_session{'
-            output += f'user="{user}",title="{title}",state="{code}"'
+            output += f'user="{uid}",title="{title}",state="{code}"'
             output += "} 1\n"
         except KeyError:
             continue
@@ -54,7 +59,7 @@ def formatSession(text: str) -> str:
             output += "jellyfin_active_session{"
             output += f'user="{user}",title="Nothing",state="Stopped"'
             output += "} 1\n"
-            usersToDelteFromCache.append(user)
+            # usersToDelteFromCache.append(uid)
 
     writeCache("jellyfinSessions", cache)
 
