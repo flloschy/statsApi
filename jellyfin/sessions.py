@@ -36,10 +36,10 @@ def formatSession(text: str) -> str:
 
             uid = title + code
 
-            if user in cache.keys():
-                if cache[user] == uid:
-                    continue
-            cache[user] = uid
+            # if user in cache.keys():
+            #     if cache[user] == uid:
+            #         continue
+            cache[user] = None
 
             output += 'jellyfin_active_session{'
             output += f'user="{user}",title="{title}",state="{code}"'
@@ -55,9 +55,6 @@ def formatSession(text: str) -> str:
             output += f'user="{user}",title="Nothing",state="Stopped"'
             output += "} 1\n"
             usersToDelteFromCache.append(user)
-
-    for userToDelete in usersToDelteFromCache:
-        del cache[userToDelete]
 
     writeCache("jellyfinSessions", cache)
 
