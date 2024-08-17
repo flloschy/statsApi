@@ -1,5 +1,5 @@
 {
-    "jellyfinUrl": "https://jellyfin.floschy.dev/",
+    "jellyfinUrl": "http://localhost:3004/",
     "jellyfinApiKey": "",
     "port": 1234
 }
