@@ -9,4 +9,4 @@ def format(temp: str) -> float:
     return "system_stats_temperature " + str(round(int(temp) / 1000, ndigits=3)) + "\n"
 
 def getSystemTemperature():
-    return makeResponse(formatMemory(getMemory()))
+    return makeResponse(format(getMemory()))
