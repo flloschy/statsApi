@@ -6,10 +6,12 @@ from jellyfin.sessions import getJellyfinSessions
 from system.cpu import getSystemCpuUsage
 from system.disk import getSystemDiskUsage
 from system.memory import getSystemMemoryUsage
+from system.temperature import getSystemTemperature
 
 import flask
 import waitress
 import os
+import setproctitle
 
 
 endPoints = {
@@ -19,6 +21,7 @@ endPoints = {
     "/cpu": getSystemCpuUsage,
     "/disk": getSystemDiskUsage,
     "/memory": getSystemMemoryUsage,
+    "/temp": getSystemTemperature
 }
 
 
@@ -29,5 +32,6 @@ for endPoint, fn in endPoints.items():
 
 
 if __name__ == '__main__':
+    setproctitle.setproctitle("statsApi")
     waitress.serve(api, host="127.0.0.1", port=CONFIG["port"])
     # api.run(host="127.0.0.1", port=CONFIG["port"])
